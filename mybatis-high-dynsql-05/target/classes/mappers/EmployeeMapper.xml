@@ -19,6 +19,11 @@
     1. 自动添加where关键字，where内部有任何一个if 满足，自动添加where关键字，不满足去掉where
     2. 自动去掉多余的and和or关键字
     -->
+    <!--
+    第一种情况：所有条件都满足 WHERE emp_name=? or emp_salary>?
+    第二种情况：部分条件满足 WHERE emp_salary>?
+    第三种情况：所有条件都不满足 没有where子句
+         -->
     <select id="query" resultType="employee">
         select * from t_emp
         <where>
