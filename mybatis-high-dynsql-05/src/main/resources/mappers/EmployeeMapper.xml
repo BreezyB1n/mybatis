@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace等于mapper接口类的全限定名,这样实现对应 -->
+<mapper namespace="com.atguigu.mapper.EmployeeMapper">
+
+
+    <!--如果传入属性就判断相等，如果不传入就不加对应属性
+        if 判断传入参数是否添加语句
+        test属性，内部做比较运算，
+        最终true将标签内的sql语句进行拼接
+        false不拼接标签内部语句
+        判断语法："key 比较符号 值 and  "
+        不推荐直接写符号
+        实体符号 html  > == &gt; , < == &&lt;
+
+    where标签作用：
+    1. 自动添加where关键字，where内部有任何一个if 满足，自动添加where关键字，不满足去掉where
+    2. 自动去掉多余的and和or关键字
+    -->
+    <select id="query" resultType="employee">
+        select * from t_emp
+        <where>
+        <if test="name != null">
+            emp_name = #{name}
+        </if>
+        <if test="salary != null and salary &gt; 100">
+            and emp_salary = #{salary}
+        </if>
+        </where>
+    </select>
+
+</mapper>

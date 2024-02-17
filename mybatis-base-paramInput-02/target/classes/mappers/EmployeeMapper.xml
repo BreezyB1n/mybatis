@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace等于mapper接口类的全限定名,这样实现对应 -->
+<mapper namespace="com.Bin.mapper.EmployeeMapper">
+    <select id="queryById" resultType="com.Bin.pojo.Employee">
+        select emp_id empId, emp_name empName, emp_salary empSalary from
+        t_emp where emp_id = #{id};
+    </select>
+</mapper>

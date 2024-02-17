@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace等于mapper接口类的全限定名,这样实现对应 -->
+<mapper namespace="com.Bin.mapper.EmployeeMapper">
+    <select id="queryById" resultType="com.Bin.pojo.Employee">
+        select emp_id empId, emp_name empName, emp_salary empSalary from
+        t_emp where emp_id = #{id};
+    </select>
+
+    <delete id="deleteById">
+        delete from t_emp where emp_id = #{id};
+    </delete>
+
+    <select id="queryBySalary" resultType="com.Bin.pojo.Employee">
+        elect emp_id empId, emp_name empName, emp_salary empSalary from
+        t_emp where emp_salary > #{salary};
+    </select>
+
+    <!--穿入实体对象-->
+    <insert id="insertEmp">
+        insert into t_emp (emp_name, emp_salary) values (#{empName}, #{empSalary});
+    </insert>
+
+    <!--场景3： 传入多个简单类型数据如何取值key
+        1. 注解指定param
+    -->
+    <select id="queryByNameAndSalary" resultType="om.Bin.pojo.Employee">
+        elect emp_id empId, emp_name empName, emp_salary empSalary from
+        t_emp where emp_name = #{name} and emp_salary > #{salary};
+    </select>
+
+    <!--场景4：传入map如何指定key的值-->
+    <insert id="insertEmpMap">
+        insert into t_emp (emp_name, emp_salary) values (#{name}, #{salary});
+    </insert>
+</mapper>

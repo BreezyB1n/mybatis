@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace等于mapper接口类的全限定名,这样实现对应 -->
+<mapper namespace="com.atguigu.mappers.EmployeeMapper">
+
+    <delete id="deleteById">
+        delete from t_emp where emp_id = #{id}
+    </delete>
+
+    <!--场景1 返回单个简单类型如何指定 resultType写法！ 返回值的数据类型-->
+    <select id="queryNameById" resultType="java.lang.String">
+        select emp_name empName from t_emp where emp_id = #{id}
+    </select>
+
+    <select id="querySalaryById" resultType="java.lang.Double">
+        select emp_salary from t_emp where emp_id = #{id}
+    </select>
+
+    <select id="queryById" resultType="com.atguigu.pojo.Employee">
+        select * from
+        t_emp where emp_id = #{empId};
+    </select>
+
+    <select id="selectEmpNameAndMaxSalary" resultType="map">
+        <!-- Map<String,Object> selectEmpNameAndMaxSalary(); -->
+        <!-- 返回工资最高的员工的姓名和他的工资 -->
+            SELECT
+            emp_name 员工姓名,
+            emp_salary 员工工资,
+            (SELECT AVG(emp_salary) FROM t_emp) 部门平均工资
+            FROM t_emp WHERE emp_salary=(
+            SELECT MAX(emp_salary) FROM t_emp
+            )
+    </select>
+    
+    <select id="selectAll" resultType="com.atguigu.pojo.Employee">
+        select * from t_emp;
+    </select>
+
+    <!--
+    场景5：主键回显 获取插入数据的主键
+    useGeneratedKeys = "true" 我们想要数据库自动增长的主键值
+    keyColumn = "emp_id" 主键列的值！！！
+    keyProperty = "empId" 接收主键列值的属性
+     -->
+    <insert id="insertEmp" useGeneratedKeys="true" keyColumn="emp_id" keyProperty="empId">
+        insert into t_emp (emp_name, emp_salary)
+        values (#{empName}, #{empSalary});
+    </insert>
+
+</mapper>
